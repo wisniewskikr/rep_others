@@ -1,0 +1,54 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>pl.kwi</groupId>
+  <artifactId>OtherMvnReleasePlugin</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  
+  <scm>
+	<connection>scm:svn:http://wisniewskikr.unfuddle.com/svn/wisniewskikr_test/OtherMvnReleasePlugin/trunk</connection>
+    <!-- developerConnection>scm:svn:http://wisniewskikr.unfuddle.com/svn/wisniewskikr_test/OtherMvnReleasePlugin/trunk</developerConnection>
+    <url>file:///c:/svnFakeRepo/repo</url -->
+       
+  </scm>
+  
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <version>2.4.1</version>
+        <configuration>
+        	<!-- autoVersionSubmodules>true</autoVersionSubmodules>
+			<useReleaseProfile>false</useReleaseProfile>
+			<preparationGoals>clean verify install</preparationGoals>
+			<goals>deploy</goals -->
+			
+			<!-- 
+			Instead of this you can use in console 
+			-Dusername=wisniewskikr -Dpassword=***** 
+			-->
+			<!-- username></username>
+			<password></password -->
+		</configuration>
+      </plugin>
+    </plugins>    
+  </build>
+  
+  <!-- 
+  This is necessery for release:perform.
+  Then package with previous version is build.
+   -->
+  <distributionManagement>
+        <repository>
+            <id>fakerepo</id>
+            <name>Local file system</name>
+            <url>file:///c:/svnFakeRepo/repo</url>
+        </repository>
+        <snapshotRepository>
+            <id>fakesnapshotrepo</id>
+            <name>Local file system</name>
+            <url>file:///c:/svnFakeRepo/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+  
+</project>
