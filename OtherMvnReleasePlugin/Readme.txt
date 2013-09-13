@@ -1,5 +1,7 @@
 MAVEN-RELEASE-PLUGIN
 
+
+
 You can use this plugin when you want to do automatically
 release your SNAPSHOT project to SVN. This version will
 be increased to next SNAPSHOT version by maven-release-plugin. 
@@ -9,7 +11,19 @@ will be commited and new tag will be created.
 SVN.
 	To use this plagin you have to fulfull two conditions:
 - version has to have SNAPSHOT;
-- there can not be any not commited change in project	
+- there can not be any not commited change in project
+- there can not be any Snapshot in project dependencies. You can
+skip this by settitn parameter: allowTimestampedSnapshots=false	
+
+In other ways it is the same as:
+- create tag of project;
+- increase version;
+- check in version;
+- check out tag from repository and build.
+
+So this plugin is basically very useful for increasing version 
+and tag description in repository.
+
  
 Maven-realease-plugin is used mainly with two commends:
 1. Mvn release:prepare -Dusername= -Dpassword=
