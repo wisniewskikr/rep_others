@@ -2,7 +2,7 @@ package org.wk.mains;
 
 import javax.swing.JFrame;
 
-import org.wk.frames.HelloWorldFrame;
+import org.wk.frames.Frame;
 import org.wk.panels.ChooseXmlPanel;
 
 
@@ -14,7 +14,7 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		
-		JFrame frame = new HelloWorldFrame();
+		JFrame frame = new Frame();
 		new ChooseXmlPanel(frame);
 		
 	}
