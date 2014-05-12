@@ -51,7 +51,7 @@ public class ChooseXmlPanel extends AbstrPanel{
 	private class ActionListenerButtonNext implements ActionListener{
 
 		public void actionPerformed(ActionEvent e) {
-			new EditXmlPanel(frame);
+			new EditXmlPanel(frame, null);
 		}
 		
 	}

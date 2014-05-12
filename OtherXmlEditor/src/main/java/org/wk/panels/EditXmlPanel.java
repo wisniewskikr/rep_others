@@ -29,10 +29,13 @@ public class EditXmlPanel extends AbstrPanel{
 
 	private static final long serialVersionUID = 1L;
 	private JPanel buttonTreePanel;
+	private DefaultMutableTreeNode selectedNode;
+	private JTree tree;
 	
 	
-	public EditXmlPanel(JFrame frame){
+	public EditXmlPanel(JFrame frame, JTree tree){
 		super(frame);
+		this.tree = tree;
 		buttonTreePanel = new JPanel();
 		
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
@@ -82,16 +85,34 @@ public class EditXmlPanel extends AbstrPanel{
 	
 	private JButton getButtonEdit() {
 		JButton button = new JButton("Edit");
+		button.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new EditNodePanel(frame, selectedNode, tree);
+			}
+		});
 		return button;
 	}
 	
 	private JButton getButtonDelete() {
 		JButton button = new JButton("Delete");
+		button.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new DeleteNodePanel(frame, selectedNode, tree);
+			}
+		});
 		return button;
 	}
 	
 	private JButton getButtonNewNode() {
 		JButton button = new JButton("New Node");
+		button.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new NewNodePanel(frame, selectedNode, tree);
+			}
+		});
 		return button;
 	}
 	
@@ -106,21 +127,26 @@ public class EditXmlPanel extends AbstrPanel{
 	}
 	
 	private JTree getEtidXmlTree() {
-				
 		
-		DefaultMutableTreeNode root =
-		        new DefaultMutableTreeNode(new XmlNode("root"));
-		root.add(new DefaultMutableTreeNode(new XmlNodeAttribute("key", "value")));
-		root.add(new DefaultMutableTreeNode(new XmlNodeValue("value")));
-		root.add(new DefaultMutableTreeNode(new XmlNode("node")));
+		if(tree == null) {
+			
+			DefaultMutableTreeNode root =
+			        new DefaultMutableTreeNode(new XmlNode("root"));
+//			root.add(new DefaultMutableTreeNode(new XmlNodeAttribute("key", "value")));
+//			root.add(new DefaultMutableTreeNode(new XmlNodeValue("value")));
+//			root.add(new DefaultMutableTreeNode(new XmlNode("node")));
+			
+			
+			DefaultTreeModel model = new DefaultTreeModel(root);
+			tree = new JTree(model);
+			
+			
+		}
 		
-		
-		DefaultTreeModel model = new DefaultTreeModel(root);
-		JTree tree = new JTree(model);
 		tree.setShowsRootHandles(true);
 		tree.setCellRenderer(new MyTreeCellRenderer());
 		tree.getSelectionModel().addTreeSelectionListener(new EditXmlTreeSelectionListener());
-		tree.setSelectionPath(new TreePath(root.getPath()));
+		tree.setSelectionPath(new TreePath(tree.getModel().getRoot()));
 		
 		return tree;
 		
@@ -138,9 +164,9 @@ public class EditXmlPanel extends AbstrPanel{
 
 		@Override
 		public void valueChanged(TreeSelectionEvent e) {
-			DefaultMutableTreeNode node = (DefaultMutableTreeNode)e.getPath().getLastPathComponent();
+			selectedNode = (DefaultMutableTreeNode)e.getPath().getLastPathComponent();
 			
-			if(node.getUserObject() instanceof XmlNode) {
+			if(selectedNode.getUserObject() instanceof XmlNode) {
 				buttonTreePanel.removeAll();
 				buttonTreePanel.add(getButtonEdit());
 				buttonTreePanel.add(getButtonDelete());
@@ -151,7 +177,7 @@ public class EditXmlPanel extends AbstrPanel{
 				buttonTreePanel.repaint();
 			}
 			
-			if(node.getUserObject() instanceof XmlNodeAttribute) {
+			if(selectedNode.getUserObject() instanceof XmlNodeAttribute) {
 				buttonTreePanel.removeAll();
 				buttonTreePanel.add(getButtonEdit());
 				buttonTreePanel.add(getButtonDelete());
@@ -159,7 +185,7 @@ public class EditXmlPanel extends AbstrPanel{
 				buttonTreePanel.repaint();
 			}
 			
-			if(node.getUserObject() instanceof XmlNodeValue) {
+			if(selectedNode.getUserObject() instanceof XmlNodeValue) {
 				buttonTreePanel.removeAll();
 				buttonTreePanel.add(getButtonEdit());
 				buttonTreePanel.add(getButtonDelete());
