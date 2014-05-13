@@ -88,7 +88,13 @@ public class EditXmlPanel extends AbstrPanel{
 		button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new EditNodePanel(frame, selectedNode, tree);
+				if(selectedNode.getUserObject() instanceof XmlNode) {
+					new EditNodePanel(frame, selectedNode, tree);
+				} else if(selectedNode.getUserObject() instanceof XmlNodeAttribute) {
+					new EditNodeAttributePanel(frame, selectedNode, tree);
+				} else if(selectedNode.getUserObject() instanceof XmlNodeValue) {
+					new EditNodeValuePanel(frame, selectedNode, tree);
+				}					
 			}
 		});
 		return button;
@@ -99,7 +105,13 @@ public class EditXmlPanel extends AbstrPanel{
 		button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new DeleteNodePanel(frame, selectedNode, tree);
+				if(selectedNode.getUserObject() instanceof XmlNode) {
+					new DeleteNodePanel(frame, selectedNode, tree);
+				} else if(selectedNode.getUserObject() instanceof XmlNodeAttribute) {
+					new DeleteNodeAttributePanel(frame, selectedNode, tree);
+				} else if(selectedNode.getUserObject() instanceof XmlNodeValue) {
+					new DeleteNodeValuePanel(frame, selectedNode, tree);
+				}
 			}
 		});
 		return button;
@@ -118,11 +130,23 @@ public class EditXmlPanel extends AbstrPanel{
 	
 	private JButton getButtonNewAttribute() {
 		JButton button = new JButton("New Attribute");
+		button.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new NewNodeAttributePanel(frame, selectedNode, tree);
+			}
+		});
 		return button;
 	}
 	
 	private JButton getButtonNewValue() {
 		JButton button = new JButton("New Value");
+		button.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new NewNodeValuePanel(frame, selectedNode, tree);
+			}
+		});
 		return button;
 	}
 	
