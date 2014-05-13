@@ -74,10 +74,21 @@ public class EditXmlPanel extends AbstrPanel{
 		
 		panel = new JPanel();
 		JButton button = new JButton("Back");
-		button.addActionListener(new ActionListenerButtonBack());
+		button.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new ChooseXmlPanel(frame);
+			}
+		});
 		panel.add(button);
 		
 		button = new JButton("Next");
+		button.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new ValidateXmlPanel(frame);
+			}
+		});
 		panel.add(button);
 		
 		return panel;
@@ -166,14 +177,6 @@ public class EditXmlPanel extends AbstrPanel{
 		tree.setSelectionPath(new TreePath(tree.getModel().getRoot()));
 		
 		return tree;
-		
-	}
-	
-	private class ActionListenerButtonBack implements ActionListener{
-
-		public void actionPerformed(ActionEvent e) {
-			new ChooseXmlPanel(frame);
-		}
 		
 	}
 	

@@ -12,13 +12,13 @@ import javax.swing.JPanel;
 import org.wk.swing.abstrs.AbstrPanel;
 
 
-public class ChooseXmlPanel extends AbstrPanel{
+public class SaveXmlPanel extends AbstrPanel{
 		
 
 	private static final long serialVersionUID = 1L;
 
 	
-	public ChooseXmlPanel(JFrame frame){
+	public SaveXmlPanel(JFrame frame){
 		super(frame);
 		
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
@@ -33,7 +33,7 @@ public class ChooseXmlPanel extends AbstrPanel{
 	private JPanel getTitlePanel(){
 		
 		panel = new JPanel();
-		panel.add(new JLabel("Choose XML"));
+		panel.add(new JLabel("Save XML"));
 		return panel;
 		
 	}
@@ -41,14 +41,16 @@ public class ChooseXmlPanel extends AbstrPanel{
 	private JPanel getButtonPanel(){
 		
 		panel = new JPanel();
-		JButton jButtonNext = new JButton("Next");
-		jButtonNext.addActionListener(new ActionListener() {
+		JButton button = new JButton("Back");
+		button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new EditXmlPanel(frame, null);
+				new ValidateXmlPanel(frame);
 			}
 		});
-		panel.add(jButtonNext);
+		panel.add(button);
+		button = new JButton("Finish");
+		panel.add(button);
 		return panel;
 		
 	}
