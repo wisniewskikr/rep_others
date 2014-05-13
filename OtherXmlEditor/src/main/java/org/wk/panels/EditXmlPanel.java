@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Enumeration;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -153,18 +154,10 @@ public class EditXmlPanel extends AbstrPanel{
 	private JTree getEtidXmlTree() {
 		
 		if(tree == null) {
-			
 			DefaultMutableTreeNode root =
 			        new DefaultMutableTreeNode(new XmlNode("root"));
-//			root.add(new DefaultMutableTreeNode(new XmlNodeAttribute("key", "value")));
-//			root.add(new DefaultMutableTreeNode(new XmlNodeValue("value")));
-//			root.add(new DefaultMutableTreeNode(new XmlNode("node")));
-			
-			
 			DefaultTreeModel model = new DefaultTreeModel(root);
 			tree = new JTree(model);
-			
-			
 		}
 		
 		tree.setShowsRootHandles(true);
@@ -194,9 +187,13 @@ public class EditXmlPanel extends AbstrPanel{
 				buttonTreePanel.removeAll();
 				buttonTreePanel.add(getButtonEdit());
 				buttonTreePanel.add(getButtonDelete());
-				buttonTreePanel.add(getButtonNewNode());
+				if(!hasValue(selectedNode)) {
+					buttonTreePanel.add(getButtonNewNode());
+				}
 				buttonTreePanel.add(getButtonNewAttribute());
-				buttonTreePanel.add(getButtonNewValue());
+				if(!hasValue(selectedNode) && !hasSubNode(selectedNode)) {
+					buttonTreePanel.add(getButtonNewValue());
+				}				
 				buttonTreePanel.validate();
 				buttonTreePanel.repaint();
 			}
@@ -218,6 +215,42 @@ public class EditXmlPanel extends AbstrPanel{
 			}
 			
 		}
+		
+	}
+	
+	@SuppressWarnings("unchecked")
+	private boolean hasSubNode(DefaultMutableTreeNode node) {
+		
+		boolean result = false;
+		
+		Enumeration<DefaultMutableTreeNode> children = node.children();
+		while (children.hasMoreElements()) {
+			DefaultMutableTreeNode nod = children.nextElement();
+			if(nod.getUserObject() instanceof XmlNode) {
+				result = true;
+				break;
+			}
+		}
+		
+		return result;
+		
+	}
+	
+	@SuppressWarnings("unchecked")
+	private boolean hasValue(DefaultMutableTreeNode node) {
+		
+		boolean result = false;
+		
+		Enumeration<DefaultMutableTreeNode> children = node.children();
+		while (children.hasMoreElements()) {
+			DefaultMutableTreeNode nod = children.nextElement();
+			if(nod.getUserObject() instanceof XmlNodeValue) {
+				result = true;
+				break;
+			}
+		}
+		
+		return result;
 		
 	}
 	
