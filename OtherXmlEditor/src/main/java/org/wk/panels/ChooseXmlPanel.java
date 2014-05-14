@@ -18,7 +18,10 @@ import org.wk.swing.abstrs.AbstrPanel;
 public class ChooseXmlPanel extends AbstrPanel{
 		
 
+	private static final String IMPORT_ACTION_COMMAND = "import";
+	private static final String NEW_ACTION_COMMAND = "new";
 	private static final long serialVersionUID = 1L;
+	private ButtonGroup group;
 
 	
 	public ChooseXmlPanel(JFrame frame){
@@ -46,15 +49,17 @@ public class ChooseXmlPanel extends AbstrPanel{
 		
 		panel = new JPanel();
 		
-		ButtonGroup group = new ButtonGroup();
+		group = new ButtonGroup();
 		JRadioButton button = new JRadioButton("New Xml");
+		button.setActionCommand(NEW_ACTION_COMMAND);
 		button.setSelected(true);
 		group.add(button);
 		panel.add(button);
 		button = new JRadioButton("Import Xml");
+		button.setActionCommand(IMPORT_ACTION_COMMAND);
 		group.add(button);
 		panel.add(button);
-		
+				
 		return panel;
 		
 	}
@@ -66,7 +71,14 @@ public class ChooseXmlPanel extends AbstrPanel{
 		jButtonNext.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new EditXmlPanel(frame, null);
+				
+				String actionCommand = group.getSelection().getActionCommand();
+				if(NEW_ACTION_COMMAND.equals(actionCommand)) {
+					new EditXmlPanel(frame, null);
+				}else if(IMPORT_ACTION_COMMAND.equals(actionCommand)) {
+					new ImportXmlPanel(frame);
+				}				
+				
 			}
 		});
 		panel.add(jButtonNext);
