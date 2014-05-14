@@ -86,7 +86,7 @@ public class EditXmlPanel extends AbstrPanel{
 		button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new ValidateXmlPanel(frame);
+				new ValidateXmlPanel(frame, tree);
 			}
 		});
 		panel.add(button);
