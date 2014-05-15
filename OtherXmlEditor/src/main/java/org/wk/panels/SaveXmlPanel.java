@@ -70,7 +70,7 @@ public class SaveXmlPanel extends AbstrPanel{
 		fileChoosePanel.add(textField);
 		
 		JButton button = new JButton("Choose File ...");
-		button.addActionListener(new SaveL());
+		button.addActionListener(new ChooseFileListener());
 		fileChoosePanel.add(button);
 		
 		return fileChoosePanel;
@@ -81,35 +81,7 @@ public class SaveXmlPanel extends AbstrPanel{
 		
 		panel = new JPanel();
 		JButton button = new JButton("Save");
-		button.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-				if(file == null) {
-					displayMessage("File can not be empty");
-					return;
-				} 
-				
-				try {
-					
-					Document doc = treeService.convertTree2Document(tree);
-					DOMSource source = new DOMSource(doc);
-					
-					TransformerFactory transformerFactory = TransformerFactory.newInstance();
-		            Transformer transformer = transformerFactory.newTransformer();
-		            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
-		            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-		            
-		            transformer.transform(source, new StreamResult(file));
-										
-				} catch (Exception exc) {
-					displayMessage("Following error occurs: " + exc.getMessage());
-				}
-				
-				displayMessage("File saved succuessfully");
-								
-			}
-		});
+		button.addActionListener(new SaveFileListener());
 		panel.add(button);
 		return panel;
 		
@@ -138,7 +110,7 @@ public class SaveXmlPanel extends AbstrPanel{
 		
 	}
 	
-	 class SaveL implements ActionListener {
+	 class ChooseFileListener implements ActionListener {
 		    public void actionPerformed(ActionEvent e) {
 		      JFileChooser c = new JFileChooser();
 		      int rVal = c.showSaveDialog(SaveXmlPanel.this);
@@ -151,5 +123,34 @@ public class SaveXmlPanel extends AbstrPanel{
 		      }		     
 		    }
 		  }
+	 
+	 class SaveFileListener implements ActionListener {
+		 @Override
+			public void actionPerformed(ActionEvent e) {
+				
+				if(file == null) {
+					displayMessage("File can not be empty");
+					return;
+				} 
+				
+				try {
+					
+					Document doc = treeService.convertTree2Document(tree);
+					DOMSource source = new DOMSource(doc);
+					
+					TransformerFactory transformerFactory = TransformerFactory.newInstance();
+		            Transformer transformer = transformerFactory.newTransformer();
+		            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+		            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+		            
+		            transformer.transform(source, new StreamResult(file));
+										
+				} catch (Exception exc) {
+					displayMessage("Following error occurs: " + exc.getMessage());
+				}
+				
+				displayMessage("File saved succuessfully");
+		 }
+	 }	 
 		
 }
