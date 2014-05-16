@@ -1,3 +1,19 @@
+OTHERXMLEDITOR
+
+
+This project is Java standalone project (Java Swing). It enables working with xml files:
+- create new file;
+- import file;
+- edit xml (create, update, delete, read);
+- validate xml by xsd file;
+- save xml to file.
+
+
+
+---
+
+
+
 BUILD PROJECT
 
 To building project you have to go to location <project_home>, run Maven console

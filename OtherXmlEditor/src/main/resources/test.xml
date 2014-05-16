@@ -1,0 +1,6 @@
+<root>
+<node1 key1="value1">value1</node1>
+<node2 key2="value2">
+<node3 key3="value3">value3</node3>
+</node2>
+</root>
