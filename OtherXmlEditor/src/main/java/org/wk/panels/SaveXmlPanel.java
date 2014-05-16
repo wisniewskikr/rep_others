@@ -147,6 +147,7 @@ public class SaveXmlPanel extends AbstrPanel{
 										
 				} catch (Exception exc) {
 					displayMessage("Following error occurs: " + exc.getMessage());
+					return;
 				}
 				
 				displayMessage("File saved succuessfully");
