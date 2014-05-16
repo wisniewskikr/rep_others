@@ -1,4 +1,4 @@
-package org.wk.panels;
+package org.wk.panels.xmlNodes;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -13,11 +13,12 @@ import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
+import org.wk.panels.EditXmlPanel;
 import org.wk.services.TreeService;
 import org.wk.swing.abstrs.AbstrPanel;
 
 
-public class DeleteNodePanel extends AbstrPanel{
+public class DeleteNodeAttributePanel extends AbstrPanel{
 		
 
 	private static final long serialVersionUID = 1L;
@@ -26,7 +27,7 @@ public class DeleteNodePanel extends AbstrPanel{
 	private JTree tree;
 
 	
-	public DeleteNodePanel(JFrame frame, DefaultMutableTreeNode selectedNode, JTree tree){
+	public DeleteNodeAttributePanel(JFrame frame, DefaultMutableTreeNode selectedNode, JTree tree){
 		super(frame);
 		this.selectedNode = selectedNode;
 		this.tree = tree;
@@ -45,7 +46,7 @@ public class DeleteNodePanel extends AbstrPanel{
 	private JPanel getTitlePanel(){
 		
 		panel = new JPanel();
-		panel.add(new JLabel("Delete Node"));
+		panel.add(new JLabel("Delete Node Attribute"));
 		return panel;
 		
 	}
@@ -53,7 +54,7 @@ public class DeleteNodePanel extends AbstrPanel{
 	private JPanel getRequestPanel(){
 		
 		panel = new JPanel();
-		panel.add(new JLabel("Do you really want to delete node with name: " + selectedNode.getUserObject().toString() + "?"));
+		panel.add(new JLabel("Do you really want to delete node attribute: " + selectedNode.getUserObject().toString() + "?"));
 		return panel;
 		
 	}
@@ -74,7 +75,7 @@ public class DeleteNodePanel extends AbstrPanel{
 		button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				treeService.deleteXmlNode(selectedNode);
+				treeService.deleteXmlNodeAttribute(selectedNode);
 				((DefaultTreeModel)tree.getModel()).reload();
 				new EditXmlPanel(frame, tree);
 			}

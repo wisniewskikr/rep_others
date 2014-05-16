@@ -20,6 +20,15 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
+import org.wk.panels.xmlNodes.DeleteNodeAttributePanel;
+import org.wk.panels.xmlNodes.DeleteNodePanel;
+import org.wk.panels.xmlNodes.DeleteNodeValuePanel;
+import org.wk.panels.xmlNodes.EditNodeAttributePanel;
+import org.wk.panels.xmlNodes.EditNodePanel;
+import org.wk.panels.xmlNodes.EditNodeValuePanel;
+import org.wk.panels.xmlNodes.NewNodeAttributePanel;
+import org.wk.panels.xmlNodes.NewNodePanel;
+import org.wk.panels.xmlNodes.NewNodeValuePanel;
 import org.wk.swing.abstrs.AbstrPanel;
 import org.wk.xml.elements.XmlNode;
 import org.wk.xml.elements.XmlNodeAttribute;

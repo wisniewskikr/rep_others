@@ -63,7 +63,7 @@ public class ImportXmlPanel extends AbstrPanel{
 		textField.setEnabled(false);
 		fileChoosePanel.add(textField);
 		
-		JButton button = new JButton("Choose File ...");
+		JButton button = new JButton("Choose Xml File ...");
 		button.addActionListener(new ChooseFileListener());
 		fileChoosePanel.add(button);
 		

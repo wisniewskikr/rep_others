@@ -1,4 +1,4 @@
-package org.wk.panels;
+package org.wk.panels.xmlNodes;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -13,6 +13,7 @@ import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
+import org.wk.panels.EditXmlPanel;
 import org.wk.services.TreeService;
 import org.wk.swing.abstrs.AbstrPanel;
 

@@ -1,4 +1,4 @@
-package org.wk.panels;
+package org.wk.panels.xmlNodes;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -9,16 +9,16 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
+import org.wk.panels.EditXmlPanel;
 import org.wk.services.TreeService;
 import org.wk.swing.abstrs.AbstrPanel;
 
 
-public class NewNodeValuePanel extends AbstrPanel{
+public class DeleteNodePanel extends AbstrPanel{
 		
 
 	private static final long serialVersionUID = 1L;
@@ -27,7 +27,7 @@ public class NewNodeValuePanel extends AbstrPanel{
 	private JTree tree;
 
 	
-	public NewNodeValuePanel(JFrame frame, DefaultMutableTreeNode selectedNode, JTree tree){
+	public DeleteNodePanel(JFrame frame, DefaultMutableTreeNode selectedNode, JTree tree){
 		super(frame);
 		this.selectedNode = selectedNode;
 		this.tree = tree;
@@ -46,7 +46,7 @@ public class NewNodeValuePanel extends AbstrPanel{
 	private JPanel getTitlePanel(){
 		
 		panel = new JPanel();
-		panel.add(new JLabel("New Node Value"));
+		panel.add(new JLabel("Delete Node"));
 		return panel;
 		
 	}
@@ -54,9 +54,7 @@ public class NewNodeValuePanel extends AbstrPanel{
 	private JPanel getRequestPanel(){
 		
 		panel = new JPanel();
-		panel.add(new JLabel("Node value: "));
-		textField = new JTextField(10);
-		panel.add(textField);
+		panel.add(new JLabel("Do you really want to delete node with name: " + selectedNode.getUserObject().toString() + "?"));
 		return panel;
 		
 	}
@@ -73,11 +71,11 @@ public class NewNodeValuePanel extends AbstrPanel{
 		});
 		panel.add(button);
 		
-		button = new JButton("Create");
+		button = new JButton("Delete");
 		button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				treeService.addXmlNodeValue(selectedNode, textField.getText());
+				treeService.deleteXmlNode(selectedNode);
 				((DefaultTreeModel)tree.getModel()).reload();
 				new EditXmlPanel(frame, tree);
 			}

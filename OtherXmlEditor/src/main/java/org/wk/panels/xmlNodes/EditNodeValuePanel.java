@@ -1,4 +1,4 @@
-package org.wk.panels;
+package org.wk.panels.xmlNodes;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -14,23 +14,21 @@ import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
+import org.wk.panels.EditXmlPanel;
 import org.wk.services.TreeService;
 import org.wk.swing.abstrs.AbstrPanel;
-import org.wk.xml.elements.XmlNodeAttribute;
 
 
-public class EditNodeAttributePanel extends AbstrPanel{
+public class EditNodeValuePanel extends AbstrPanel{
 		
 
 	private static final long serialVersionUID = 1L;
 	private DefaultMutableTreeNode selectedNode;
 	private TreeService treeService;
 	private JTree tree;
-	private JTextField key;
-	private JTextField value;
 
 	
-	public EditNodeAttributePanel(JFrame frame, DefaultMutableTreeNode selectedNode, JTree tree){
+	public EditNodeValuePanel(JFrame frame, DefaultMutableTreeNode selectedNode, JTree tree){
 		super(frame);
 		this.selectedNode = selectedNode;
 		this.tree = tree;
@@ -49,24 +47,18 @@ public class EditNodeAttributePanel extends AbstrPanel{
 	private JPanel getTitlePanel(){
 		
 		panel = new JPanel();
-		panel.add(new JLabel("Edit Node Attribute"));
+		panel.add(new JLabel("Edit Node Value"));
 		return panel;
 		
 	}
 	
 	private JPanel getRequestPanel(){
-		XmlNodeAttribute node = (XmlNodeAttribute) selectedNode.getUserObject();
 		
 		panel = new JPanel();
-		panel.add(new JLabel("Key: "));
-		key = new JTextField(10);
-		key.setText(node.getKey());
-		panel.add(key);
-		panel.add(new JLabel("Value: "));
-		value = new JTextField(10);
-		value.setText(node.getValue());
-		panel.add(value);
-		
+		panel.add(new JLabel("Node value: "));
+		textField = new JTextField(10);
+		textField.setText(selectedNode.getUserObject().toString());
+		panel.add(textField);
 		return panel;
 		
 	}
@@ -87,7 +79,7 @@ public class EditNodeAttributePanel extends AbstrPanel{
 		button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				treeService.updateXmlNodeAttribute(selectedNode, key.getText(), value.getText());
+				treeService.updateXmlNodeValue(selectedNode, textField.getText());
 				((DefaultTreeModel)tree.getModel()).reload();
 				new EditXmlPanel(frame, tree);
 			}

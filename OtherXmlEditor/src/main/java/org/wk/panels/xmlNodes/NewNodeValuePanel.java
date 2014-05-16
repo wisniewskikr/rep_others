@@ -1,4 +1,4 @@
-package org.wk.panels;
+package org.wk.panels.xmlNodes;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -14,11 +14,12 @@ import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
+import org.wk.panels.EditXmlPanel;
 import org.wk.services.TreeService;
 import org.wk.swing.abstrs.AbstrPanel;
 
 
-public class NewNodePanel extends AbstrPanel{
+public class NewNodeValuePanel extends AbstrPanel{
 		
 
 	private static final long serialVersionUID = 1L;
@@ -27,7 +28,7 @@ public class NewNodePanel extends AbstrPanel{
 	private JTree tree;
 
 	
-	public NewNodePanel(JFrame frame, DefaultMutableTreeNode selectedNode, JTree tree){
+	public NewNodeValuePanel(JFrame frame, DefaultMutableTreeNode selectedNode, JTree tree){
 		super(frame);
 		this.selectedNode = selectedNode;
 		this.tree = tree;
@@ -46,7 +47,7 @@ public class NewNodePanel extends AbstrPanel{
 	private JPanel getTitlePanel(){
 		
 		panel = new JPanel();
-		panel.add(new JLabel("New Node"));
+		panel.add(new JLabel("New Node Value"));
 		return panel;
 		
 	}
@@ -54,7 +55,7 @@ public class NewNodePanel extends AbstrPanel{
 	private JPanel getRequestPanel(){
 		
 		panel = new JPanel();
-		panel.add(new JLabel("Node name: "));
+		panel.add(new JLabel("Node value: "));
 		textField = new JTextField(10);
 		panel.add(textField);
 		return panel;
@@ -77,7 +78,7 @@ public class NewNodePanel extends AbstrPanel{
 		button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				treeService.addXmlNode(selectedNode, textField.getText());
+				treeService.addXmlNodeValue(selectedNode, textField.getText());
 				((DefaultTreeModel)tree.getModel()).reload();
 				new EditXmlPanel(frame, tree);
 			}

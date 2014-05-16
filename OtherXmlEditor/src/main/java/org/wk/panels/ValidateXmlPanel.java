@@ -68,7 +68,7 @@ public class ValidateXmlPanel extends AbstrPanel{
 		textField.setEnabled(false);
 		fileChoosePanel.add(textField);
 		
-		JButton button = new JButton("Choose File ...");
+		JButton button = new JButton("Choose Xsd File ...");
 		button.addActionListener(new ChooseFileListener());
 		fileChoosePanel.add(button);
 		
