@@ -44,7 +44,7 @@ public class SaveXmlPanel extends AbstrPanel{
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		this.add(getTitlePanel(), BorderLayout.NORTH);
 		this.add(getMessagePanel(), BorderLayout.NORTH);
-		this.add(getChooseFilePanel());
+		this.add(getChooseFilePanel(), BorderLayout.SOUTH);
 		this.add(getButtonSavePanel(), BorderLayout.SOUTH);
 		this.add(getButtonPanel(), BorderLayout.SOUTH);
 		
