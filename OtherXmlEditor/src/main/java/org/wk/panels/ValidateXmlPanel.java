@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JTree;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.xml.XMLConstants;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.validation.Schema;
@@ -112,6 +113,8 @@ public class ValidateXmlPanel extends AbstrPanel{
 	 class ChooseFileListener implements ActionListener {
 		    public void actionPerformed(ActionEvent e) {
 		      JFileChooser c = new JFileChooser();
+		      FileNameExtensionFilter xmlfilter = new FileNameExtensionFilter("xsd files (*.xsd)", "xsd");
+		      c.setFileFilter(xmlfilter);
 		      int rVal = c.showSaveDialog(ValidateXmlPanel.this);
 		      if (rVal == JFileChooser.APPROVE_OPTION) {
 		        file = new File(c.getCurrentDirectory().toString() + System.getProperty("file.separator") + c.getSelectedFile().getName());

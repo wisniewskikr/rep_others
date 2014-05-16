@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JTree;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
@@ -113,6 +114,8 @@ public class SaveXmlPanel extends AbstrPanel{
 	 class ChooseFileListener implements ActionListener {
 		    public void actionPerformed(ActionEvent e) {
 		      JFileChooser c = new JFileChooser();
+		      FileNameExtensionFilter xmlfilter = new FileNameExtensionFilter("xml files (*.xml)", "xml");
+		      c.setFileFilter(xmlfilter);
 		      int rVal = c.showSaveDialog(SaveXmlPanel.this);
 		      if (rVal == JFileChooser.APPROVE_OPTION) {
 		        file = new File(c.getCurrentDirectory().toString() + System.getProperty("file.separator") + c.getSelectedFile().getName());
