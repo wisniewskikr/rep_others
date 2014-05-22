@@ -20,6 +20,7 @@ public class ChooseXmlPanel extends AbstrPanel{
 
 	private static final String IMPORT_ACTION_COMMAND = "import";
 	private static final String NEW_ACTION_COMMAND = "new";
+	private static final String TEMPLATE_ACTION_COMMAND = "template";
 	private static final long serialVersionUID = 1L;
 	private ButtonGroup group;
 
@@ -59,6 +60,10 @@ public class ChooseXmlPanel extends AbstrPanel{
 		button.setActionCommand(IMPORT_ACTION_COMMAND);
 		group.add(button);
 		panel.add(button);
+		button = new JRadioButton("Template Xml");
+		button.setActionCommand(TEMPLATE_ACTION_COMMAND);
+		group.add(button);
+		panel.add(button);
 				
 		return panel;
 		
@@ -75,8 +80,10 @@ public class ChooseXmlPanel extends AbstrPanel{
 				String actionCommand = group.getSelection().getActionCommand();
 				if(NEW_ACTION_COMMAND.equals(actionCommand)) {
 					new EditXmlPanel(frame, null);
-				}else if(IMPORT_ACTION_COMMAND.equals(actionCommand)) {
+				} else if(IMPORT_ACTION_COMMAND.equals(actionCommand)) {
 					new ImportXmlPanel(frame);
+				} else if(TEMPLATE_ACTION_COMMAND.equals(actionCommand)) {
+					new TemplateXmlPanel(frame);
 				}				
 				
 			}
