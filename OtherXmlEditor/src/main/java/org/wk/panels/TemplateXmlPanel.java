@@ -16,8 +16,14 @@ import javax.swing.JTree;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
+import org.wk.panels.SaveXmlPanel.SaveFileListener;
 import org.wk.services.TreeService;
 import org.wk.swing.abstrs.AbstrPanel;
 
@@ -45,6 +51,7 @@ public class TemplateXmlPanel extends AbstrPanel{
 		this.add(getMessagePanel(), BorderLayout.NORTH);
 		this.add(getChooseXmlFilePanel(), BorderLayout.SOUTH);
 		this.add(getChooseCsvFilePanel(), BorderLayout.SOUTH);
+		this.add(getButtonFillTemplatePanel(), BorderLayout.SOUTH);
 		this.add(getButtonPanel(), BorderLayout.SOUTH);
 		
 		frame.setContentPane(this);	
@@ -89,6 +96,16 @@ public class TemplateXmlPanel extends AbstrPanel{
 		csvFileChoosePanel.add(button);
 		
 		return csvFileChoosePanel;
+		
+	}
+	
+	private JPanel getButtonFillTemplatePanel(){
+		
+		panel = new JPanel();
+		JButton button = new JButton("Fill Template");
+		button.addActionListener(new SaveFileListener());
+		panel.add(button);
+		return panel;
 		
 	}
 	
@@ -143,12 +160,11 @@ public class TemplateXmlPanel extends AbstrPanel{
 		    }
 		  }
 	 
-	 class NextListener implements ActionListener {
-		 
+	 class SaveFileListener implements ActionListener {
 		 @Override
 			public void actionPerformed(ActionEvent e) {
-			 
-			 	if(xmlFile == null) {
+				
+			 if(xmlFile == null) {
 					displayMessage("Xml file can not be empty");
 					return;
 				}
@@ -156,22 +172,31 @@ public class TemplateXmlPanel extends AbstrPanel{
 			 	if(csvFile == null) {
 					displayMessage("Csv file can not be empty");
 					return;
-				} 
-			 
-			 	try {
+				}  
+				
+				try {
 					
-//			 		DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
-//			        DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
-//			        Document doc = docBuilder.parse(file);
-			        
-//			        tree = treeService.convertDocument2Tree(doc);
-			        tree = null;
-			 		
+					
+										
 				} catch (Exception exc) {
 					displayMessage("Following error occurs: " + exc.getMessage());
 					return;
-				}			 
+				}
+				
+				displayMessage("Template filled succuessfully");
+		 }
+	 }	 
+	 
+	 class NextListener implements ActionListener {
+		 
+		 @Override
+			public void actionPerformed(ActionEvent e) {
 			 
+			 	if(tree == null) {
+			 		displayMessage("Please fill template");
+					return;
+			 	}
+		 
 				new EditXmlPanel(frame, tree);
 			}
 		 
