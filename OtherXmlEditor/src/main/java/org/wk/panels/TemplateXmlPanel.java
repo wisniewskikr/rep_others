@@ -180,6 +180,11 @@ public class TemplateXmlPanel extends AbstrPanel{
 				
 				try {
 					
+					String[] headers = csvService.readHeaderFromFile(csvFile);
+					for (String header : headers) {
+						System.out.println("---header: " + header);
+					}
+										
 					List<String[]> lines = csvService.readLinesFromFile(csvFile);
 					for (String[] values : lines) {
 						for (String value : values) {

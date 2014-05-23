@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import au.com.bytecode.opencsv.CSVParser;
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
 
@@ -36,8 +37,27 @@ public class CsvService {
 		
 		try {
 			
-			CSVReader csvReader = new CSVReader(new FileReader(file));
+			CSVReader csvReader = new CSVReader(new FileReader(file), CSVParser.DEFAULT_SEPARATOR, 
+					CSVParser.DEFAULT_QUOTE_CHARACTER, 1);
 			result = csvReader.readAll();
+			csvReader.close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+		
+	}
+	
+	public String[] readHeaderFromFile(File file) {
+		
+		String[] result = null;
+		
+		try {
+			
+			CSVReader csvReader = new CSVReader(new FileReader(file));
+			result = csvReader.readNext();
 			csvReader.close();
 			
 		} catch (Exception e) {
