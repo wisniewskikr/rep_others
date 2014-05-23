@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -24,6 +25,7 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
 import org.wk.panels.SaveXmlPanel.SaveFileListener;
+import org.wk.services.CsvService;
 import org.wk.services.TreeService;
 import org.wk.swing.abstrs.AbstrPanel;
 
@@ -32,19 +34,21 @@ public class TemplateXmlPanel extends AbstrPanel{
 		
 
 	private static final long serialVersionUID = 1L;
-	private JTree tree;
-	private TreeService treeService;
+	private JTree tree;	
 	private JTextField xmlFileTextField;
 	private JPanel xmlFileChoosePanel;
 	private File xmlFile;
 	private JTextField csvFileTextField;
 	private JPanel csvFileChoosePanel;
 	private File csvFile;
+	private TreeService treeService;
+	private CsvService csvService;
 	
 	
 	public TemplateXmlPanel(JFrame frame){
 		super(frame);
 		this.treeService = new TreeService();
+		this.csvService = new CsvService();
 		
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		this.add(getTitlePanel(), BorderLayout.NORTH);
@@ -176,7 +180,12 @@ public class TemplateXmlPanel extends AbstrPanel{
 				
 				try {
 					
-					
+					List<String[]> lines = csvService.readLinesFromFile(csvFile);
+					for (String[] values : lines) {
+						for (String value : values) {
+							System.out.println("---value: " + value);
+						}
+					}
 										
 				} catch (Exception exc) {
 					displayMessage("Following error occurs: " + exc.getMessage());
