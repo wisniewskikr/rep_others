@@ -26,9 +26,9 @@
 		<div id="subtitle" name="subtitle" class="subtitle"><h3>Page: <b>Input</b></h3></div>
 		<div id="content" name="content" class="content">
 			<div class="contentElement">
-				<div class="text">Name * <spring:errors path="name" cssClass="error" /> </div>
-				<div class="input"><input type="text" id="name" name="name" value="${name}" /></div>
-				<div class="description">Type your name here</div>
+				<div class="text">Address * <spring:errors path="address" cssClass="error" /> </div>
+				<div class="input"><input type="text" id="address" name="address" value="${address}" /></div>
+				<div class="description">Type address here</div>
 			</div>
 			
 		</div>

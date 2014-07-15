@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
-import pl.kwi.commands.InputCommand;
 import pl.kwi.commands.OutputCommand;
 import pl.kwi.services.NameService;
 
@@ -40,12 +39,12 @@ public class OutputController{
 	 */
 	@RequestMapping
 	public ModelAndView displayPage(
-			@ModelAttribute("command")InputCommand command,  
+			@ModelAttribute("command")OutputCommand command,  
 			HttpServletRequest request, 
 			HttpServletResponse response){
 		
-		String name = nameService.load();
-		command.setName(name);
+		String address = nameService.load();
+		command.setAddress(address);
 		
 		return new ModelAndView("outputJsp");
 		

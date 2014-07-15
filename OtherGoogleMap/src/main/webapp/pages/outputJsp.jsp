@@ -24,7 +24,7 @@
 </head>
 
 
-<body onload="loadMap()">
+<body onload="loadMap('${command.address}')">
 
 <div id="map_container"></div>
 
@@ -36,7 +36,7 @@
 		<div id="content" name="content" class="content">
 			<div class="contentElement">
 				<div>&nbsp;</div>
-				<div id="name" name="name" class="text"> Hello World <b>${command.name}</b> </div>
+				<div id="name" name="name" class="text"> You are looking for address: <b>${command.address}</b> </div>
 				<div>&nbsp;</div>
 			</div>
 			

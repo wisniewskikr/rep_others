@@ -69,8 +69,8 @@ public class InputController{
 			return displayPage(command, request, response);
 		}
 		
-		String name = command.getName();
-		nameService.save(name);
+		String address = command.getAddress();
+		nameService.save(address);
 		
 		return new ModelAndView(new RedirectView("/output", true, true, true));
 		

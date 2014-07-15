@@ -15,13 +15,13 @@ public class InputCommand implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@NotEmpty(message="Please fill this field")
-	private String name;
+	private String address;
 
-	public String getName() {
-		return name;
+	public String getAddress() {
+		return address;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setAddress(String address) {
+		this.address = address;
 	}	
 	
 }

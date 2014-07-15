@@ -1,4 +1,4 @@
-function loadMap() {
+function loadMap(address) {
 	
 	//var latlng = new google.maps.LatLng(53.3669049, 14.603458);
 	var myOptions = {
@@ -8,7 +8,6 @@ function loadMap() {
 	};
 	var map = new google.maps.Map(document.getElementById("map_container"), myOptions);
  
-	var address = 'Polanka 20B, Poznan';
 	var geocoder = new google.maps.Geocoder();
 	  geocoder.geocode( { 'address': address}, function(results, status) {
 	    if (status == google.maps.GeocoderStatus.OK) {
