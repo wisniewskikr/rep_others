@@ -38,3 +38,31 @@ go to location <project_home>/target and:
 or
 
 - in console type command: "java -jar OtherXmlEditor.jar"
+
+
+
+---
+
+
+
+XML TEMPLATE
+
+Xml template is created by using Csv and Velocity.
+
+1. Csv
+Csv (ang. Coma Separated Values) is file with values which are
+separated by coma. These values are stored in rows. First
+row is header with names of these values. 
+
+2. Velocity
+Velocity is a tool which enables creating some file basing
+on template. Template file has extension *.vm.
+
+3. Usage
+To use xml template you have to have csv file with header
+and values. For instance header can look like this: "name",
+"surname".
+In Velocity template you can use $valuesList which contains 
+$values. $values is single row from csv file. You can
+get some value from this row using name of header. For 
+instance: $values.get("name")  

@@ -1,0 +1,8 @@
+<users>
+	#foreach( $values in $valuesList )		
+		<user>
+			<name>$values.get("name")</name>
+			<surname>$values.get("surname")</surname>
+		</user>	
+	#end
+</users>
