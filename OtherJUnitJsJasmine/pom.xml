@@ -125,24 +125,43 @@
 				        </execution>
 				      </executions>
 				      <configuration>
-				        <jsSrcDir>${project.basedir}/src/main/webapp/js</jsSrcDir>
-						<jsTestSrcDir>${project.basedir}/src/test/webapp/js</jsTestSrcDir>
+				        <jsSrcDir>src/main/webapp/js</jsSrcDir>
+						<jsTestSrcDir>src/test/webapp/js</jsTestSrcDir>
 						<junitXmlReportFileName>TEST-jasmine.xml</junitXmlReportFileName>
+						<keepServerAlive>true</keepServerAlive>
 						
-						<!-- preloadSources>
+						<preloadSources>
 						    <source>src/main/webapp/js/jquery-1.9.1.js</source>
 						    <source>src/main/webapp/js/jquery-ui-1.10.3.custom.js</source>
-						  </preloadSources -->
+						  </preloadSources>
+								
+						<sourceExcludes>
+							<exclude>src/main/webapp/js/jquery-1.9.1.js</exclude>
+							<exclude>src/main/webapp/js/jquery-ui-1.10.3.custom.js</exclude>
+						</sourceExcludes>
 						
-						<!-- sourceIncludes>
-							<include>script.js</include>
-						</sourceIncludes -->
-						
-						<!-- sourceExcludes>
-							<exclude>jquery-1.9.1.js</exclude>
-							<exclude>jquery-ui-1.10.3.custom.js</exclude>
-						</sourceExcludes -->
-						
+				      </configuration>
+				    </plugin>
+
+					<plugin>
+				      <groupId>com.github.timurstrekalov</groupId>
+				      <artifactId>saga-maven-plugin</artifactId>
+				      <version>1.5.3</version>
+				      <executions>
+				        <execution>
+				          <goals>
+				            <goal>coverage</goal>
+				          </goals>
+				        </execution>
+				      </executions>
+				      <configuration>
+				        <baseDir>http://localhost:${jasmine.serverPort}</baseDir>
+				        <outputDir>${project.build.directory}/coverage</outputDir>
+				        <noInstrumentPatterns>
+				        	<pattern>.*/spec/.*</pattern>
+				          	<pattern>.+/jquery-1.9.1\.js</pattern>
+				          	<pattern>.+/jquery-ui-1.10.3.custom\.js</pattern>
+				        </noInstrumentPatterns>
 				      </configuration>
 				    </plugin>
 				    		        

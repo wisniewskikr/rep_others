@@ -21,3 +21,7 @@ function subtract(a, b) {
 
 	return result;
 }
+
+function tmp() {
+	alert("aaa");
+}
