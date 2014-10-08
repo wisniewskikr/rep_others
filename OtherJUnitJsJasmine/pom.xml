@@ -18,6 +18,8 @@
 		<version.org.jboss.arquillian.drone>1.3.0.Final</version.org.jboss.arquillian.drone>
 		
 		<sonar.language>js</sonar.language>
+		<sonar.sources>${project.basedir}/src/main/webapp/js</sonar.sources>
+		<sonar.exclusions>**/jquery-1.9.1.js,**/jquery-ui-1.10.3.custom.js</sonar.exclusions>
     </properties>
     
     
