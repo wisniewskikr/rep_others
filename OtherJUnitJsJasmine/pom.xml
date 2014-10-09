@@ -192,11 +192,11 @@
 											tofile="${saga.output.coverage.sonar.lcov.file}" />
 				
 										<echo
-											message="replacing 'SF:src/script.js' with 'SF:${jsSources.relative}/script.js' in file ${saga.output.coverage.sonar.lcov.file}" />
+											message="replacing 'SF:src/' with 'SF:${jsSources.relative}/' in file ${saga.output.coverage.sonar.lcov.file}" />
 										<replace 
 											file="${saga.output.coverage.sonar.lcov.file}"
-											token="SF:src/script.js" 
-											value="SF:${jsSources.relative}/script.js" />
+											token="SF:src/" 
+											value="SF:${jsSources.relative}/" />
 									</target>
 								</configuration>
 							</execution>
