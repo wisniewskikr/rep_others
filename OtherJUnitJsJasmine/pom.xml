@@ -20,7 +20,6 @@
 		<jsSources.relative>src/main/webapp/js</jsSources.relative>
 		
 		<sonar.language>js</sonar.language>
-		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
 		<sonar.sources>${project.basedir}/${jsSources.relative}</sonar.sources>
 		<sonar.exclusions>**/jquery-1.9.1.js,**/jquery-ui-1.10.3.custom.js</sonar.exclusions>
 		
@@ -28,8 +27,6 @@
 		<saga.output.coverage.file>${saga.output.dir}/total-coverage.dat</saga.output.coverage.file>
 		<saga.output.coverage.sonar.lcov.file>${saga.output.dir}/coverage.lcov</saga.output.coverage.sonar.lcov.file>
 		
-		<sonar.javascript.reportsPath>${saga.output.dir}</sonar.javascript.reportsPath>
-		<sonar.javascript.jstestdriver.reportsPath>${saga.output.dir}</sonar.javascript.jstestdriver.reportsPath>
 		<sonar.javascript.coveragePlugin>lcov</sonar.javascript.coveragePlugin>
 		<sonar.javascript.lcov.reportPath>${saga.output.coverage.sonar.lcov.file}</sonar.javascript.lcov.reportPath>
     </properties>
@@ -143,17 +140,14 @@
 						<jsTestSrcDir>src/test/webapp/js</jsTestSrcDir>
 						<junitXmlReportFileName>TEST-jasmine.xml</junitXmlReportFileName>
 						<keepServerAlive>true</keepServerAlive>
-						
 						<preloadSources>
 						    <source>src/main/webapp/js/jquery-1.9.1.js</source>
 						    <source>src/main/webapp/js/jquery-ui-1.10.3.custom.js</source>
 						  </preloadSources>
-								
 						<sourceExcludes>
 							<exclude>src/main/webapp/js/jquery-1.9.1.js</exclude>
 							<exclude>src/main/webapp/js/jquery-ui-1.10.3.custom.js</exclude>
 						</sourceExcludes>
-						
 				      </configuration>
 				    </plugin>
 
@@ -192,13 +186,17 @@
 								<configuration>
 									<target>
 										<echo
-											message="setting up sonar lcov file (from saga): ${saga.output.coverage.sonar.lcov.file} ..." />
-										<copy file="${saga.output.coverage.file}" tofile="${saga.output.coverage.sonar.lcov.file}" />
+											message="copy file '${saga.output.coverage.file}' to file '${saga.output.coverage.sonar.lcov.file}'" />
+										<copy 
+											file="${saga.output.coverage.file}" 
+											tofile="${saga.output.coverage.sonar.lcov.file}" />
 				
 										<echo
-											message="replacing '${saga.output.lcov.source.dir.path} with '${sonar.lcov.source.dir.path}' in ${saga.output.coverage.sonar.lcov.file}" />
-										<replace file="${saga.output.coverage.sonar.lcov.file}"
-											token="SF:http://localhost:${jasmine.serverPort}/src/" value="SF:${jsSources.relative}/" />
+											message="replacing 'SF:src/script.js' with 'SF:${jsSources.relative}/script.js' in file ${saga.output.coverage.sonar.lcov.file}" />
+										<replace 
+											file="${saga.output.coverage.sonar.lcov.file}"
+											token="SF:src/script.js" 
+											value="SF:${jsSources.relative}/script.js" />
 									</target>
 								</configuration>
 							</execution>
