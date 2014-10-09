@@ -151,6 +151,7 @@
 				      </configuration>
 				    </plugin>
 
+					<!-- Test coverage for js -->
 					<plugin>
 				      <groupId>com.github.timurstrekalov</groupId>
 				      <artifactId>saga-maven-plugin</artifactId>
@@ -173,6 +174,8 @@
 				      </configuration>
 				    </plugin>
 
+					<!-- Improvement of test coverage result file
+					for Sonar -->
 					<plugin>
 						<artifactId>maven-antrun-plugin</artifactId>
 						<version>1.7</version>
