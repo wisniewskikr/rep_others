@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>pl.kwi</groupId>
+    <artifactId>OtherSonarJs</artifactId>
+    <packaging>war</packaging>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>Application with example Sonar for Java Script</name>
+    <url>http://maven.apache.org</url>
+
+
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java-version>1.6</java-version>
+        <project.properties.file>project.properties</project.properties.file>
+        <version.org.jboss.arquillian>1.1.4.Final</version.org.jboss.arquillian>
+		<version.org.jboss.arquillian.drone>1.3.0.Final</version.org.jboss.arquillian.drone>
+		
+		<sonar.language>java</sonar.language>
+		<sonar.projectName>${artifactId}-java</sonar.projectName>
+    </properties>
+    
+    
+    <profiles>
+	
+		<!-- Profile 'loc' (abbreviation for 'local'): location profile. 
+		Indicates local computer as a place for task profiles. -->
+		<profile>
+			<id>loc</id>			
+			<properties>
+				<!-- Server data -->
+				<server.url>${loc.server.url}</server.url>
+				<server.username>${loc.server.username}</server.username>
+				<server.password>${loc.server.password}</server.password>
+				<server.path>/${project.artifactId}</server.path>				
+			</properties>							
+		</profile>
+		
+		<!-- Profile 'deploy': task profile.
+		Deploys project on computer indicated by location profile. -->
+		<profile>
+			<id>deploy</id>									
+			<build>
+				<plugins>
+					<!-- Unit tests -->
+					<plugin>
+			            <groupId>org.apache.maven.plugins</groupId>
+			            <artifactId>maven-surefire-plugin</artifactId>
+			            <configuration>			            	
+			                <skip>true</skip>			                
+			            </configuration>
+			        </plugin> 
+			        <!-- Tomcat 7 deployment -->					
+					<plugin>
+				        <groupId>org.apache.tomcat.maven</groupId>
+		          		<artifactId>tomcat7-maven-plugin</artifactId>
+		          		<version>2.0</version>
+				        <executions>
+				        	<execution>
+				        		<phase>pre-integration-test</phase>
+				        		<goals>
+				        			<goal>deploy</goal>
+				        		</goals>
+				        	</execution>
+				        </executions>
+				        <configuration>
+				        	<url>${server.url}</url>
+				        	<username>${server.username}</username>
+		          			<password>${server.password}</password>
+		          			<path>${server.path}</path>
+                            <update>true</update>
+				        </configuration>
+				      </plugin>			          
+				</plugins>
+			</build>						
+		</profile>
+		
+		<!-- Profile 'unit': task profile.
+		Runs unit tests. -->
+		<profile>
+			<id>unit</id>
+			<activation>
+	            <activeByDefault>true</activeByDefault>
+	        </activation>			
+			<build>
+				<plugins>
+					<!-- Unit tests -->
+					<plugin>
+			            <groupId>org.apache.maven.plugins</groupId>
+			            <artifactId>maven-surefire-plugin</artifactId>
+			            <configuration>			            	
+			                <skip>true</skip>			                
+			            </configuration>
+			            <executions>
+					       <execution>
+					          <id>unit-tests</id>
+					          <phase>test</phase>
+					          <goals>
+					             <goal>test</goal>
+					          </goals>
+					          <configuration>			            	
+			                	<skip>false</skip>
+			                	<includes>
+            						<include>**/*Test.java</include>
+            					</includes>
+			                	<excludes>
+                					<exclude>**/IntgTests.java</exclude>
+            					</excludes>			                
+			            	  </configuration>
+					        </execution>					        
+					     </executions>			              
+			        </plugin>			        
+				</plugins>
+			</build>			
+		</profile>
+		
+		<!-- Profile 'intg' (abbreviation for 'integration'): task profile.
+		Runs integration tests. -->
+		<profile>
+			<id>intg</id>
+			<activation>
+		        <activeByDefault>true</activeByDefault>
+		    </activation>
+			
+			<properties>
+				<!-- Test intg data -->
+				<test.intg.port>${loc.test.intg.port}</test.intg.port>
+				<test.intg.path.host>http://localhost:${test.intg.port}/</test.intg.path.host>
+				<test.intg.path.context>${project.artifactId}</test.intg.path.context>
+			</properties>
+						
+			<build>
+				<plugins>
+					<!-- Integration tests -->
+					<plugin>
+			            <groupId>org.apache.maven.plugins</groupId>
+			            <artifactId>maven-surefire-plugin</artifactId>
+			            <configuration>			            	
+			                <skip>true</skip>			                 			                
+			            </configuration>
+			            <executions>
+					        <execution>
+					          <id>integration-tests</id>
+					          <phase>test</phase>
+					          <goals>
+					             <goal>test</goal>
+					          </goals>
+					          <configuration>			            	
+			                	<skip>false</skip>
+			                	<systemPropertyVariables>
+						            <test.intg.path.host>${test.intg.path.host}</test.intg.path.host>
+						            <test.intg.path.context>${test.intg.path.context}</test.intg.path.context>
+						          </systemPropertyVariables>			                	
+            					<includes>
+            						<include>**/IntgTests.java</include>
+            					</includes>
+            					<excludes>
+                					<exclude>**/*Test.java</exclude>
+            					</excludes>			                
+			            	  </configuration>
+					        </execution>
+					     </executions>			              
+			        </plugin>			        
+				</plugins>
+			</build>
+						
+		</profile>	
+		
+		<profile>
+			<id>sonar-js</id>			
+			<properties>
+				<sonar.language>js</sonar.language>	
+				<sonar.projectName>${artifactId}-js</sonar.projectName>
+				<sonar.sources>${project.basedir}/src/main/webapp/js</sonar.sources>
+				<sonar.exclusions>**/jquery-1.9.1.js,**/jquery-ui-1.10.3.custom.js</sonar.exclusions>		
+			</properties>							
+		</profile>	
+	
+	</profiles>
+	
+	
+	
+	<build>
+        <finalName>${project.artifactId}-${project.version}</finalName>
+        
+        <resources>		
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+		<testResources>
+			<testResource>
+				<directory>src/test/resources</directory>
+				<filtering>true</filtering>
+			</testResource>
+		</testResources>
+        
+        <plugins>
+        
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <source>${java-version}</source>
+                    <target>${java-version}</target>
+                </configuration>
+            </plugin>
+            
+            <!-- Pluging removing web.xml file -->
+            <plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-war-plugin</artifactId>
+		        <configuration>
+		          <failOnMissingWebXml>false</failOnMissingWebXml>
+		        </configuration>
+		      </plugin>
+            
+            <!-- Plugin for reading properties from
+			external file -->
+			<plugin>
+		        <groupId>org.codehaus.mojo</groupId>
+		        <artifactId>properties-maven-plugin</artifactId>
+		        <version>1.0-alpha-2</version>
+		        <executions>
+		          <execution>
+		            <phase>initialize</phase>
+		            <goals>
+		              <goal>read-project-properties</goal>
+		            </goals>
+		            <configuration>
+		              <files>
+		                <file>${project.properties.file}</file>
+		              </files>
+		            </configuration>
+		          </execution>
+		        </executions>
+		      </plugin>
+            
+        </plugins>
+        
+        <pluginManagement>
+        	<plugins>
+        		<!-- This plugin removes Exlipse errors.
+        		This plugin's configuration is used to store Eclipse m2e settings only. 
+        		It has no influence on the Maven build itself.-->
+        		<plugin>
+        			<groupId>org.eclipse.m2e</groupId>
+        			<artifactId>lifecycle-mapping</artifactId>
+        			<version>1.0.0</version>
+        			<configuration>
+        				<lifecycleMappingMetadata>
+        					<pluginExecutions>
+        						<pluginExecution>
+        							<pluginExecutionFilter>
+        								<groupId>
+        									org.codehaus.mojo
+        								</groupId>
+        								<artifactId>
+        									properties-maven-plugin
+        								</artifactId>
+        								<versionRange>
+        									[1.0-alpha-2,)
+        								</versionRange>
+        								<goals>
+        									<goal>
+        										read-project-properties
+        									</goal>
+        								</goals>
+        							</pluginExecutionFilter>
+        							<action>
+        								<ignore></ignore>
+        							</action>
+        						</pluginExecution>
+        					</pluginExecutions>
+        				</lifecycleMappingMetadata>
+        			</configuration>
+        		</plugin>
+        	</plugins>
+        </pluginManagement>
+	</build>
+    
+    
+    <dependencyManagement>
+	    <dependencies>
+	        <!-- Arquillian Core dependencies -->
+	        <dependency>
+	            <groupId>org.jboss.arquillian</groupId>
+	            <artifactId>arquillian-bom</artifactId>
+	            <version>${version.org.jboss.arquillian}</version>
+	            <type>pom</type>
+	            <scope>import</scope>
+	        </dependency>
+	        <!-- Arquillian Drone dependencies and WebDriver/Selenium dependencies -->
+	        <dependency>
+	            <groupId>org.jboss.arquillian.extension</groupId>
+	            <artifactId>arquillian-drone-bom</artifactId>
+	            <version>${version.org.jboss.arquillian.drone}</version>
+	            <type>pom</type>
+	            <scope>import</scope>
+	        </dependency>
+	    </dependencies>
+	</dependencyManagement>
+    
+    
+    <dependencies>
+    
+        <!-- Servlet 3.0 API -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.0.1</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- JSTL dependencies --> 
+        <dependency>
+                <groupId>taglibs</groupId>
+                <artifactId>standard</artifactId>
+                <version>1.1.2</version>
+        </dependency>         
+        <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>jstl</artifactId>
+                <version>1.1.2</version>
+        </dependency>
+		
+		<!-- Commons dependencies with for instance
+		StringUtils -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.0</version>
+		</dependency>
+		
+		<!-- Unit tests dependencies -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>1.8.5</version>
+			<scope>test</scope>
+		</dependency>
+		
+		<!-- Dependencies with embedded Tomcat -->
+		<dependency>
+            <groupId>org.jboss.arquillian.container</groupId>
+            <artifactId>arquillian-tomcat-embedded-7</artifactId>
+            <version>1.0.0.CR5</version>
+            <scope>test</scope>		           
+        </dependency>		 
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-core</artifactId>
+            <version>7.0.42</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-jasper</artifactId>
+            <version>7.0.42</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-logging-juli</artifactId>
+            <version>7.0.42</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jdt.core.compiler</groupId>
+            <artifactId>ecj</artifactId>
+            <version>3.7</version>
+            <scope>provided</scope>
+        </dependency>
+						
+		<!-- Dependencies with Arquillian -->
+		<dependency>
+		    <groupId>org.jboss.arquillian.extension</groupId>
+		    <artifactId>arquillian-drone-webdriver-depchain</artifactId>
+		    <type>pom</type>
+		    <scope>test</scope>
+		</dependency>
+		<dependency>
+		    <groupId>org.jboss.arquillian.junit</groupId>
+		    <artifactId>arquillian-junit-container</artifactId>
+		    <scope>test</scope>
+		</dependency>
+		
+    </dependencies>
+
+    
+</project>
