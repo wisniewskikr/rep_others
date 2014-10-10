@@ -175,7 +175,24 @@
 				<sonar.sources>${project.basedir}/src/main/webapp/js</sonar.sources>
 				<sonar.exclusions>**/jquery-1.9.1.js,**/jquery-ui-1.10.3.custom.js</sonar.exclusions>		
 			</properties>							
-		</profile>	
+		</profile>
+		
+		<profile>
+			<id>sonar-all</id>			
+			<properties>
+				<sonar.modules>module1,module2</sonar.modules>
+		
+				<module1.sonar.projectName>${artifactId}-java</module1.sonar.projectName>
+				<module1.sonar.language>java</module1.sonar.language>
+				<module1.sonar.projectBaseDir>.</module1.sonar.projectBaseDir>
+				
+				<module2.sonar.projectName>${artifactId}-js</module2.sonar.projectName>
+				<module2.sonar.language>js</module2.sonar.language>
+				<module2.sonar.sources>${project.basedir}/src/main/webapp/js</module2.sonar.sources>
+				<module2.sonar.exclusions>**/jquery-1.9.1.js,**/jquery-ui-1.10.3.custom.js</module2.sonar.exclusions>
+				<module2.sonar.projectBaseDir>.</module2.sonar.projectBaseDir>	
+			</properties>							
+		</profile>		
 	
 	</profiles>
 	
